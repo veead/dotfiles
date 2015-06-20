@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if [ $# -gt 0 ]; then
+    source=$1
+else
+    source=master
+fi
+
+#Get the current branch name
+branch=`git rev-parse --abbrev-ref HEAD`
+
+#How much ahead is your branch is from master
+num_commits=`git log $source..$branch --oneline | wc -l`
+
+#Get the index of the first commit from where you want to squash
+#i.e. last 3 commits means HEAD, HEAD~1, HEAD~2, head_commit starts from 2
+head_commit=`echo "$num_commits-1" | bc`
+
+#Get the first comment from the head_commit you want to use
+first_comment=`git log -1 --pretty=%B HEAD~$head_commit`
+
+echo "Merging previous $num_commits on $branch from $source with comment as \n$first_comment"
+
+#Reset the curret branch to the commit which is before the list of commits
+#you want to squash
+git reset --soft HEAD~$num_commits
+
+#Get the list of all commit messages for future use  - in case we want to support all commit messages
+#if you want to use all messages a single commit message
+all_messages=$(git log --format=%B --reverse HEAD..HEAD@{1})
+
+#make the commit
+git commit -m "$first_comment"
+
+#END

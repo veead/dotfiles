@@ -1,0 +1,10 @@
+#!/bin/sh
+branch=`git rev-parse --abbrev-ref HEAD`
+rebase=
+if [ $# -eq 1 ];
+then
+	rebase="--rebase"
+fi
+echo "git pull $rebase origin $branch"
+git pull $rebase origin $branch
+

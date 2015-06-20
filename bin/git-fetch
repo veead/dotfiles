@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ $# -gt 1 ]; then
+    branch=$2
+    source=$1
+elif [ $# -gt 0 ]; then
+    branch=$1
+    source=origin
+else
+    exit 0
+fi
+
+git fetch $source $branch:$branch
+git checkout $branch
+

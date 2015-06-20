@@ -1,0 +1,12 @@
+[push]
+	default = current
+[rerere]
+	enabled = true
+[user]
+	email = narayanan.venkiteswaran@appdirect.com
+	name = Vee
+[alias]
+	files = show --pretty="format:" --name-status
+	co = checkout
+	com = checkout master
+	lsch = diff --name-status -r

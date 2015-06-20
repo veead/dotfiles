@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if [ $# -gt 0 ]; then
+    source=$1
+else
+    source=master
+fi
+
+branch=`git rev-parse --abbrev-ref HEAD`
+if [ "$branch" = "master" ]
+then
+  echo "You are in master-- only pulling the latest changes"
+  git pull origin master
+  exit
+fi
+
+echo "$source --> $branch"
+
+git checkout $source
+git pull origin $source
+git checkout $branch
+git rebase $source

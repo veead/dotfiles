@@ -1,0 +1,21 @@
+#!/bin/sh
+if [ $# -gt 0 ]; then
+    branch=$1
+else
+    branch=`git rev-parse --abbrev-ref HEAD`
+fi
+ case $branch in
+        [0-9]* )
+		echo "You are in a numbered branch $branch --, can't push!!"
+		exit
+            	;;
+	"master" )
+  		echo "You are in master -- can't push!!"
+  		exit
+		;;
+        *) 
+		echo "Pushing $branch.."
+		;;
+ esac
+
+git push vee $branch -f

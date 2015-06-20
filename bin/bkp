@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ $# -ne 1 ];
+then
+	echo "Provide a file"
+	exit 1
+fi
+echo "cp -rf $1 $1.`date '+%Y%m%d%H%M%S'`"
+cp -rf $1 $1.`date '+%Y%m%d%H%M%S'`
